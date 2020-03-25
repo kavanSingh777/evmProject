@@ -25,12 +25,14 @@ contract Election {
     mapping(address => bool) public voters;
 
     // Store Candidates Count
-    uint public candidatesCount;
+    uint public candidatesCount=0;
 
     constructor() public
     {
-        addCandidate("Candidate 1");
-        addCandidate("Candidate 2");
+        addCandidate("Bharatiya Janata Party");
+        addCandidate("Indian National Congress");
+        addCandidate("Janata Dal (Secular)");
+        addCandidate("Janata Party");
     }
     //Storage:storage key forces the newly created variable to point
     //to the state variable (items) and not a copy. Any changes made to the new variable
@@ -57,30 +59,13 @@ contract Election {
     The candidate id must be greater than zero and less than or equal to the total candidate count.
     */
 
-
-    // function vote (uint _candidateId) public {
-    //     // require that they haven't voted before
-    //     require(!voters[msg.sender]);
-
-    //     // require a valid candidate
-    //     require(_candidateId > 0 && _candidateId <= candidatesCount);
-
-    //     // record that voter has voted
-    //     voters[msg.sender] = true;
-
-    //     // update candidate vote Count
-    //     candidates[_candidateId].voteCount ++;
-    // }
-
-
-
     function vote (uint _candidateId) public
     {
     // require that they haven't voted before
-    require(!voters[msg.sender]);
+    require(!voters[msg.sender],"Already voted");
 
     // require a valid candidate
-    require(_candidateId > 0 && _candidateId <= candidatesCount);
+    require(_candidateId > 0 && _candidateId <= candidatesCount,"Not a valid candidate");
 
     // record that voter has voted
     voters[msg.sender] = true;
@@ -90,6 +75,6 @@ contract Election {
 
     // trigger voted event(use emit statements to trigger an event)
     emit votedEvent(_candidateId);
-}
+    }
 
 }

@@ -15,12 +15,15 @@ App = {
   initWeb3: function() {
     if (typeof web3 !== 'undefined') {
       // If a web3 instance is already provided by Meta Mask.
+
       App.web3Provider = web3.currentProvider;
       web3 = new Web3(web3.currentProvider);
+      ethereum.enable();
     } else {
       // Specify default instance if no web3 instance provided
       App.web3Provider = new Web3.providers.HttpProvider('http://localhost:7545');
       web3 = new Web3(App.web3Provider);
+      ethereum.enable();
     }
     return App.initContract();
   },
@@ -77,11 +80,11 @@ App = {
           var voteCount = candidate[2];
   
           // Render candidate Result
-          var candidateTemplate = "<tr><th>" + id + "</th><td>" + name + "</td><td>" + voteCount + "</td></tr>"
+          var candidateTemplate = "<tr><th>" + id + "</th><td>" + name + "</td><td>" + voteCount + "</td></tr>";
           candidatesResults.append(candidateTemplate);
   
           // Render candidate ballot option
-          var candidateOption = "<option value='" + id + "' >" + name + "</ option>"
+          var candidateOption = "<option value='" + id + "' >" + name + "</ option>"  
           candidatesSelect.append(candidateOption);
         });
       }
@@ -107,9 +110,9 @@ App = {
     }).then(function(result) {
       // Wait for votes to update
       $("#content").hide();
-      $("#loader").show();
+      $("#loader .text-center").html("You have successfully voted, thank you");
     }).catch(function(err) {
-      console.error(err);
+      console.warn(err);
     });
   },
 
